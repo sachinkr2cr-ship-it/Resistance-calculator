@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resistance Calculator</title>
+    <style>
+        body { font-family: Arial; margin: 30px; }
+        input[type="number"] { width: 80px; margin: 5px; }
+        button { margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h2>Resistance Calculator</h2>
+    <p>Enter resistor values (in Ohms, comma separated):</p>
+    <input type="text" id="resistors" placeholder="e.g. 10, 20, 30">
+    <br>
+    <button onclick="calculate()">Calculate</button>
+    <br>
+    <label><input type="radio" name="mode" id="series" checked> Series</label>
+    <label><input type="radio" name="mode" id="parallel"> Parallel</label>
+    <br>
+    <h3 id="result"></h3>
+
+    <script>
+        function calculate() {
+            let resistors = document.getElementById("resistors").value.split(',').map(Number);
+            let series = document.getElementById("series").checked;
+            let result = 0;
+            if (series) {
+                result = resistors.reduce((acc, r) => acc + r, 0);
+            } else {
+                let inv = resistors.reduce((acc, r) => acc + 1/r, 0);
+                result = inv !== 0 ? 1/inv : 0;
+            }
+            document.getElementById("result").innerText = `Total Resistance: ${result.toFixed(2)} Ω`;
+        }
+    </script>
+</body>
+</html>
